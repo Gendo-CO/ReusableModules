@@ -3,7 +3,7 @@
 namespace ReusableModules
 {
 	// Delegates
-	public delegate void RefCopyDelegate<T>(ref T source, ref T target);
+	public delegate void RefCopyDelegate<T>(ref T source, ref T target) where T : struct;
 
 	public static class Constants
 	{
