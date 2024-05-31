@@ -14,7 +14,7 @@ public sealed class IndexedStructDictionary<T, U> where U : struct
 {
 	//--NESTED TYPES--//
 
-    public readonly ref struct KeyValuePair
+	public readonly ref struct KeyValuePair
 	{
 		public readonly T Key;
 		public readonly ref U Val;
@@ -54,12 +54,12 @@ public sealed class IndexedStructDictionary<T, U> where U : struct
 
 	//--CONSTANTS & FIELDS--//
 
-    private const int INITIAL_SIZE = 8;
+	private const int INITIAL_SIZE = 8;
 
 #if PROFILE_COLLISIONS
 	[NonSerialized] private ulong _collisions = 0;
 #endif
-    private int[] _beginningIndices = new int[INITIAL_SIZE];
+	private int[] _beginningIndices = new int[INITIAL_SIZE];
 	private int[] _nextValues = new int[INITIAL_SIZE];
 	private T[] _keys = new T[INITIAL_SIZE];
 	private U[] _values = new U[INITIAL_SIZE];
@@ -68,7 +68,7 @@ public sealed class IndexedStructDictionary<T, U> where U : struct
 
 	//--METHODS--//
 
-    public IndexedStructDictionary()
+	public IndexedStructDictionary()
 	{
 		for (int i = 0; i < INITIAL_SIZE; i++) _beginningIndices[i] = -1;
 	}
@@ -95,7 +95,9 @@ public sealed class IndexedStructDictionary<T, U> where U : struct
 			for (int index = _beginningIndices[targetBucket]; index > -1; index = _nextValues[index])
 			{
 				if (hash == _keys[index]!.GetHashCode() && EqualityComparer<T>.Default.Equals(key, _keys[index]))
+				{
 					return ref _values[index];
+				}
 
 #if PROFILE_COLLISIONS
 				_collisions++;
@@ -165,7 +167,9 @@ public sealed class IndexedStructDictionary<T, U> where U : struct
 		for (index = _beginningIndices[(hash & 0x7FFFFFFF) % _beginningIndices.Length]; index > -1; index = _nextValues[index])
 		{
 			if (hash == _keys[index]!.GetHashCode() && EqualityComparer<T>.Default.Equals(key, _keys[index]))
+			{
 				return true;
+			}
 
 #if PROFILE_COLLISIONS
 			_collisions++;

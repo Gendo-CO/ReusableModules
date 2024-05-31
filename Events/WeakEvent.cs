@@ -7,18 +7,11 @@ namespace ReusableModules.Events;
 /// </summary>
 public sealed class WeakEvent
 {
-	private struct WeakDelegateEntry
+	private struct WeakDelegateEntry(int nextFreeEntry)
 	{
-		public readonly WeakReference WeakTargetRef;
-		public MethodInfo? Method;
-		public int Next;
-
-		public WeakDelegateEntry(int nextFreeEntry)
-		{
-			WeakTargetRef = new WeakReference(null);
-			Method = null;
-			Next = nextFreeEntry;
-		}
+		public readonly WeakReference WeakTargetRef = new(null);
+		public MethodInfo? Method = null;
+		public int Next = nextFreeEntry;
 	}
 
 	private WeakDelegateEntry[] _entries = new WeakDelegateEntry[8];
@@ -111,18 +104,11 @@ public sealed class WeakEvent
 /// <typeparam name="T">The type of the parameter to pass when the event is invoked.</typeparam>
 public sealed class WeakEvent<T>
 {
-	private struct WeakDelegateEntry
+	private struct WeakDelegateEntry(int nextFreeEntry)
 	{
-		public readonly WeakReference WeakTargetRef;
-		public MethodInfo? Method;
-		public int Next;
-
-		public WeakDelegateEntry(int nextFreeEntry)
-		{
-			WeakTargetRef = new WeakReference(null);
-			Method = null;
-			Next = nextFreeEntry;
-		}
+		public readonly WeakReference WeakTargetRef = new(null);
+		public MethodInfo? Method = null;
+		public int Next = nextFreeEntry;
 	}
 
 	private WeakDelegateEntry[] _entries = new WeakDelegateEntry[8];
